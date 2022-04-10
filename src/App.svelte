@@ -12,7 +12,9 @@
     padding: 0;
   }
     .app-continer {
-        width: 100vw;
+        padding: 10px;
+        margin: 0;
+        width: 750px;
         height: 200px;
         border-top: 1px solid #ccc;
     } 
