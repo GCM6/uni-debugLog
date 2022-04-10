@@ -1,7 +1,79 @@
 {
-   "compilerOptions": {
-   "allowJs": true,
-   "target": "esnext",
-   "noEmit": true
-    }
+  /*
+    tsconfig.json是ts编译器的配置文件，ts编译器可以根据他的信息来对代码进行编译
+    'include'用来指定哪些ts文件需要被编译，
+    路径： *任意文件， **任意目录
+    'exclude' 不需要背编译的文件目录，
+    默认值：['node_modules'， 'bower_components', 'jspm_packages']
+    */
+  "include": ["./src/**/*"],
+  /*
+    定义被继承的配置文件
+    */
+  // "extends": "",
+  // "extends": "@tsconfig/svelte/tsconfig.json",
+
+  /*
+    compilerOptions： 编译配置选项
+    */
+  "compilerOptions": {
+    //用来指定ts被编译为的ES的版本
+    "target": "es2015",
+    "types": ["svelte"],
+    //指定使用的模块化的规范'none', 'commonjs', 'amd', 'system', 'umd', 'es6', 'es2015', 'es2020', 'es2022', 'esnext', 'node12', 'nodenext'
+    "module": "es6",
+    "moduleResolution":"node",
+    // 包含js
+    "allowJs":true,
+    //用来指定项目中要使用的库,代码提示，代码检查， 在浏览中执行的化不需要指定
+    // 'es5', 'es6', 'es2015', 'es7', 'es2016', 'es2017', 'es2018', 'es2019', 'es2020', 'es2021', 'esnext', 'dom', 'dom.iterable',
+    // 'webworker', 'webworker.importscripts', 'webworker.iterable', 'scripthost', 'es2015.core', 'es2015.collection', 'es2015.generator',
+    // 'es2015.iterable', 'es2015.promise', 'es2015.proxy', 'es2015.reflect', 'es2015.symbol', 'es2015.symbol.wellknown',
+    // 'es2016.array.include', 'es2017.object', 'es2017.sharedmemory', 'es2017.string', 'es2017.intl', 'es2017.typedarrays',
+    //  'es2018.asyncgenerator', 'es2018.asynciterable', 'es2018.intl', 'es2018.promise', 'es2018.regexp', 'es2019.array',
+    //  'es2019.object', 'es2019.string', 'es2019.symbol', 'es2020.bigint', 'es2020.promise', 'es2020.sharedmemory', 'es2020.string',
+    //  'es2020.symbol.wellknown', 'es2020.intl', 'es2021.promise', 'es2021.string', 'es2021.weakref', 'es2021.intl', 'esnext.array',
+    //   'esnext.symbol', 'esnext.asynciterable', 'esnext.intl', 'esnext.bigint', 'esnext.string', 'esnext.promise', 'esnext.weakref'.
+    //默认值为：es6, dom 即为浏览器的运行环境
+    // "lib": ["dom","es5"]
+
+    //指定编译后文件所在的目录
+    "outDir": "./dist",
+
+    //将代码合并为1个文件
+    //设置outFile后所有的全局作用域中的代码会合并到同一个文件中
+    //用于module: amd, system
+    // "outFile": "./dist/app.js"
+
+    //所有严格检查的总开关
+    "strict": true,
+
+    //是否对js文件进行编译，默认为false
+    "allowJs": true,
+
+    //是否检查js代码是否符合语法规范，默认为false
+    "checkJs": true,
+
+    //是否移除注释，默认为false
+    "removeComments": true,
+
+    //不生成编译后的文件，只执行编译的过程，默认为false
+    "noEmit": false,
+
+    //当有错误时，不生成编译后的文件，默认为false
+    "noEmitOnError": true,
+
+    //用来设置编译后的文件是否使用严格模式，默认为false
+    "alwaysStrict": true,
+
+    //不允许隐式any类型，默认为false
+    "noImplicitAny": true,
+
+    //不允许不明确类型this,默认为false
+    "noImplicitThis": true,
+    //严格的检查空值，默认为false
+    "strictNullChecks": true,
+    "declaration":true,
+    // "declarationDir": ''
   }
+}

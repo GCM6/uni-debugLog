@@ -1,8 +1,9 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-
-module.exports = {
-  mode: "development",
+const sveltePreprocess = require('svelte-preprocess');
+module.exports = (env, arg) => {
+  return {
+  mode: arg.mode,
   entry: {
     appLog: path.resolve(__dirname, "src/index.ts"),
   },
@@ -10,15 +11,31 @@ module.exports = {
     filename: "[name].js",
     path: path.resolve(__dirname, "./dist"),
   },
+  
   module: {
     rules: [
+      {
+        test: /\.svelte$/,
+        use: [
+          'babel-loader',
+            {
+              loader: 'svelte-loader',
+              options: {
+                emitCss: true,
+                preprocess: sveltePreprocess({
+                  sourceMap: arg.mode === 'development',//开发环境为true
+                }),
+              },
+            },
+        ]
+      },
       {
         test: /\.html$/,
         use: "html-loader",
       },
       {
         test: /\.css$/,
-        use: ["css-loader", "style-loader"],
+        use: ["style-loader", "css-loader"],
       },
       {
         test: /\.(js|ts)$/,
@@ -27,7 +44,8 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['.js', '.ts']
+    extensions: ['.ts', '.js', '.svelte'],
+    mainFields: ['svelte', 'browser', 'module', 'main']
   },
   devServer: {
     open: true,
@@ -43,4 +61,5 @@ module.exports = {
       template: path.resolve(__dirname, "./public/index.html"),
     }),
   ],
+}
 };

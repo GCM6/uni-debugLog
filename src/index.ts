@@ -1,2 +1,2 @@
-import Log from "./log";
-new Log();
+import App from "./App.svelte";
+new App({ target: document.body });
