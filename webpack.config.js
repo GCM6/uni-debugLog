@@ -11,6 +11,13 @@ module.exports = (env, arg) => {
     output: {
       filename: "[name].js",
       path: path.resolve(__dirname, "./dist"),
+      // https://webpack.docschina.org/configuration/output/#outputlibrarytype
+      // 输出的模式
+      library: {
+        name: "AppLog",
+        type: "umd",
+        export: "default",
+      },
     },
 
     module: {
