@@ -2,7 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const sveltePreprocess = require("svelte-preprocess");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-module.exports = (env, arg) => {
+module.exports = (_, arg) => {
   return {
     mode: arg.mode,
     entry: {

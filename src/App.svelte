@@ -1,20 +1,39 @@
 <script lang="ts">
   import Log from "./log/log.svelte";
+  let targetLi = "";
+  const onChangeTab = (e: any) => {
+    targetLi = e.target.id;
+  };
 </script>
 
 <dir class="app-continer">
   <div class="tab">
-    <ul class="tab-continer">
-      <li class="item">
-        <Log />
+    <ul class="tab-continer" on:click={onChangeTab}>
+      <li
+        id="li1"
+        class="item"
+        style="background: {targetLi === 'li1' ? 'rgba(40, 47, 58, 0.8)' : ''}"
+      >
+        Log
       </li>
-      <li class="item">
-        <Log />
+      <li
+        id="li2"
+        class="item"
+        style="background: {targetLi === 'li2' ? 'rgba(40, 47, 58, 0.8)' : ''}"
+      >
+        network
       </li>
-      <li class="item">
-        <Log />
+      <li
+        id="li3"
+        class="item"
+        style="background: {targetLi === 'li3' ? 'rgba(40, 47, 58, 0.8)' : ''}"
+      >
+        storage
       </li>
     </ul>
+  </div>
+  <div class="main">
+    <Log />
   </div>
 </dir>
 <div class="app-mask-layer" />
@@ -27,6 +46,10 @@
     text-align: center;
     justify-content: center;
     cursor: pointer;
+    border-right: 0.5px solid #ccc;
+  }
+  .item:last-child {
+    border: none;
   }
   li {
     list-style: none;
@@ -38,7 +61,11 @@
   }
   .tab-continer {
     display: flex;
-    padding: 10px;
+    padding: 0;
+    border-bottom: 0.5px solid #ccc;
+    /* background: rgba(48, 48, 58, 0.5); */
+    font-size: 28px;
+    color: white;
   }
 
   :global(body) {
@@ -54,6 +81,7 @@
     position: fixed;
     left: 0;
     bottom: 0;
+    background: #000;
   }
 
   .app-mask-layer {
