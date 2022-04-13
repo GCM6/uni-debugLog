@@ -1,6 +1,7 @@
 <script lang="ts">
   import Log from "./log/log.svelte";
-  let targetLi = "";
+  import Network from "./network/network.svelte";
+  let targetLi = "li1";
   const onChangeTab = (e: any) => {
     targetLi = e.target.id;
   };
@@ -9,36 +10,35 @@
 <dir class="app-continer">
   <div class="tab">
     <ul class="tab-continer" on:click={onChangeTab}>
-      <li
-        id="li1"
-        class="item"
-        style="background: {targetLi === 'li1' ? 'rgba(40, 47, 58, 0.8)' : ''}"
-      >
-        Log
-      </li>
-      <li
-        id="li2"
-        class="item"
-        style="background: {targetLi === 'li2' ? 'rgba(40, 47, 58, 0.8)' : ''}"
-      >
-        network
-      </li>
-      <li
-        id="li3"
-        class="item"
-        style="background: {targetLi === 'li3' ? 'rgba(40, 47, 58, 0.8)' : ''}"
-      >
-        storage
-      </li>
+      <li id="li1" class="item" class:active={targetLi === "li1"}>Log</li>
+      <li id="li2" class="item" class:active={targetLi === "li2"}>network</li>
+      <li id="li3" class="item" class:active={targetLi === "li3"}>storage</li>
     </ul>
   </div>
   <div class="main">
-    <Log />
+    {#if targetLi === "li1"}
+      <div class="log-continer">
+        <Log />
+      </div>
+    {:else if targetLi === "li2"}
+      <div class="network-continer">
+        <Network />
+      </div>
+    {:else if targetLi === "li3"}
+      <div class="network-continer">storage</div>
+    {/if}
   </div>
 </dir>
 <div class="app-mask-layer" />
 
 <style>
+  .main {
+    color: white;
+    padding: 10px;
+  }
+  .active {
+    background: rgba(40, 47, 58, 0.8);
+  }
   .item {
     padding: 10px;
     flex: 1;
@@ -56,8 +56,6 @@
   }
   ul {
     margin: 0;
-  }
-  .tab {
   }
   .tab-continer {
     display: flex;

@@ -1,5 +1,13 @@
 <script lang="ts">
-  let name: string = "hello";
+  import { get } from "svelte/store";
+  import Log from "./index";
+  const log = new Log();
+  let logList: any = [];
+  log.logId.subscribe((logs) => {
+    logList = logs;
+  });
 </script>
 
-<div>{name} svelte</div>
+{#each logList as logText}
+  <div>{logText}</div>
+{/each}
