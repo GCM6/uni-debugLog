@@ -1,13 +1,19 @@
 <script lang="ts">
-  import { get } from "svelte/store";
   import Log from "./index";
   const log = new Log();
   let logList: any = [];
-  log.logId.subscribe((logs) => {
-    logList = logs;
+  log.logId.subscribe((store) => {
+    logList = store.logs;
   });
 </script>
 
-{#each logList as logText}
-  <div>{logText}</div>
+{#each logList as log}
+  <div>
+    {log.type}
+    {#each log.logs as item}
+      <div>
+        {item}
+      </div>
+    {/each}
+  </div>
 {/each}

@@ -35,6 +35,8 @@
   .main {
     color: white;
     padding: 10px;
+    height: 40vh;
+    overflow: auto;
   }
   .active {
     background: rgba(40, 47, 58, 0.8);
@@ -74,7 +76,7 @@
     padding: 0;
     margin: 0;
     width: 750px;
-    height: 50vh;
+    height: 50%;
     border-top: 1px solid #ccc;
     position: fixed;
     left: 0;
