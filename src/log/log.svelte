@@ -12,7 +12,7 @@
     {log.type}
     {#each log.logs as item}
       <div>
-        {item}
+        {JSON.stringify(item)}
       </div>
     {/each}
   </div>
