@@ -1,5 +1,6 @@
 <script lang="ts">
   import Log from "./index";
+  import JSONTree from "svelte-json-tree";
   const log = new Log();
   let logList: any = [];
   log.logId.subscribe((store) => {
@@ -10,9 +11,10 @@
 {#each logList as log}
   <div>
     {log.type}
-    {#each log.logs as item}
+    {#each log.logs as value}
       <div>
-        {JSON.stringify(item)}
+        <JSONTree {value} />
+        <!-- {JSON.stringify(item)} -->
       </div>
     {/each}
   </div>
