@@ -1,10 +1,23 @@
 <script lang="ts">
   import Log from "./log/log.svelte";
+  import appLog from "./log/index";
   import Network from "./network/network.svelte";
   let targetLi = "li1";
+  const app = new appLog();
+  let testList;
+  let show: boolean = false;
   const onChangeTab = (e: any) => {
     targetLi = e.target.id;
+    show = !show;
   };
+  let testText = app.get();
+  //
+  $: {
+    if (show) {
+      testList = app.get();
+    }
+  }
+  console.log("jiba", $testText);
 </script>
 
 <dir class="app-continer">
@@ -16,6 +29,9 @@
     </ul>
   </div>
   <div class="main">
+    <!-- 用 $前缀来存储store值 -->
+    {$testText.logs[0].logs[0]}
+
     {#if targetLi === "li1"}
       <div class="log-continer">
         <Log />

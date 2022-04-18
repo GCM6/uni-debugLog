@@ -1,6 +1,11 @@
 import App from "./App.svelte";
 // dev 开发调式
-new App({ target: document.body });
+const compInstance = new App({ target: document.body });
+setTimeout(() => {
+  compInstance.testList = { test: "change" };
+}, 1000);
+console.log(compInstance);
+
 export default class AppLog {
   constructor(target?: HTMLElement) {
     console.log("这个方法执行了");

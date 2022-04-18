@@ -18,26 +18,30 @@ class Log {
     // console.log("window", this.windowLike);
     this.mockLog();
   }
+  public get() {
+    return this.logId;
+  }
   private addLog(itemData: log) {
     this.logId.update((store) => {
       store.logs.push(itemData);
       return store;
     });
+    console.log();
   }
   private mockLog() {
-    // this.addLog({
-    //   type: "log",
-    //   logs: [1, 2, 3, 4, 5],
-    // });
+    this.addLog({
+      type: "log",
+      logs: [1, 2, 3, 4, 5],
+    });
     //is window
     if (this.windowLike) {
       this.logMthods.forEach((method) => {
-        window.console[method] = (...args: any) => {
-          this.addLog({
-            type: method,
-            logs: args || [],
-          });
-        };
+        // window.console[method] = (...args: any) => {
+        //   this.addLog({
+        //     type: method,
+        //     logs: args || [],
+        //   });
+        // };
       });
     }
   }

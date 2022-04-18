@@ -1,11 +1,12 @@
 <script lang="ts">
-  import Log from "./index";
+  // import Log from "./index";
   import JSONTree from "svelte-json-tree";
-  const log = new Log();
+  import { Writable, writable } from "svelte/store";
+  // const log = new Log();
   let logList: any = [];
-  log.logId.subscribe((store) => {
-    logList = store.logs;
-  });
+  // log.logId.subscribe((store) => {
+  //   logList = store.logs;
+  // });
 </script>
 
 {#each logList as log}
