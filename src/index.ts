@@ -1,4 +1,7 @@
 import App from "./App.svelte";
+import Log from "./log/index";
+const log = new Log();
+log.init();
 // dev 开发调式
 const compInstance = new App({ target: document.body });
 setTimeout(() => {
