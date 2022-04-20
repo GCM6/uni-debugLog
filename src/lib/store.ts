@@ -6,20 +6,19 @@ export interface Losgs {
 interface Store {
   logList: Losgs[];
 }
-export default class LogStore {
-  public storeDataMap: { [moduleId: string]: Writable<Store> };
-  constructor() {
-    this.storeDataMap = {};
-  }
+export class LogStore {
+  //设置为静态类型让外面构造函数直接调用
+  // 初始化
+  public static storeDataMap: { [moduleId: string]: Writable<Store> } = {};
   //   为每个模块插件仓库
-  public create(moduleId: string) {
+  public static create(moduleId: string) {
     if (!this.storeDataMap[moduleId]) {
       this.storeDataMap[moduleId] = writable<Store>({ logList: [] });
     }
     return this.storeDataMap[moduleId];
   }
   //   获取模块对应的数据
-  public getStore(moduleId: string) {
+  public static getStore(moduleId: string) {
     return this.storeDataMap[moduleId];
   }
 }

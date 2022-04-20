@@ -1,22 +1,23 @@
 <script lang="ts">
-  // import Log from "./index";
   import JSONTree from "svelte-json-tree";
-  import LogStore from "../lib/store";
-  const store = new LogStore();
-  let log: ReturnType<typeof store.getStore>;
-  log = store.getStore("log");
-  console.log("test-->", log);
+  import { LogStore as Store } from "../lib/store";
+  let logData: ReturnType<typeof Store.getStore>;
+  logData = Store.getStore("log");
 </script>
 
-<div>123</div>
-<!-- {#each $log.logList as item} -->
-<div>
-  <!-- {item.type} -->
-  <!-- {#each log.logs as value} -->
-  <div>
-    <!-- <JSONTree {value} /> -->
-    <!-- {JSON.stringify(item)} -->
+{#each $logData.logList as item}
+  <div class="log-item">
+    <JSONTree value={item.logs} />
   </div>
-  <!-- {/each} -->
-</div>
-<!-- {/each} -->
+{/each}
+
+<style>
+  .log-item {
+    width: 100%;
+    border-bottom: 0.5px solid #ccc;
+    padding: 20px 10px;
+  }
+  /* :global ul {
+    margin: 0 !important;
+  } */
+</style>

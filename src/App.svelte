@@ -35,9 +35,9 @@
 <style>
   .main {
     color: white;
-    padding: 10px;
     height: 40vh;
     overflow: auto;
+    background: wheat;
   }
   .active {
     background: rgba(40, 47, 58, 0.8);

@@ -19,8 +19,6 @@ export default class ServerPlugin {
     new this.Component({
       target: div,
     });
-    console.log("zheg", div);
-
     cb(div);
   }
   get moduleId() {
