@@ -19,6 +19,8 @@ export default class ServerPlugin {
     new this.Component({
       target: div,
     });
+    console.log("div", div);
+
     cb(div);
   }
   get moduleId() {

@@ -1,9 +1,19 @@
 <script lang="ts">
+  // const idMap: Record<string, string> = {
+  //   li1: "log",
+  //   li2: "network",
+  //   li3: "storage",
+  // };
   import Log from "./log/log.svelte";
   import Network from "./network/network.svelte";
-  let targetLi = "li1";
+  let targetLi: string = "li1";
+  let clearStatus: boolean = false;
   const onChangeTab = (e: any) => {
     targetLi = e.target.id;
+  };
+
+  const clearStore = () => {
+    clearStatus = true;
   };
 </script>
 
@@ -19,7 +29,7 @@
     <!-- 用 $前缀来存储store值 -->
     {#if targetLi === "li1"}
       <div class="log-continer">
-        <Log />
+        <Log bind:clearStatus />
       </div>
     {:else if targetLi === "li2"}
       <div class="network-continer">
@@ -29,15 +39,35 @@
       <div class="network-continer">storage</div>
     {/if}
   </div>
+  <div class="btn-container">
+    <div class="btn clear-btn" on:click={clearStore}>clear Log</div>
+    <div class="btn">Hide page</div>
+    <div />
+  </div>
 </div>
 <div class="app-mask-layer" />
 
 <style>
-  .main {
+  .btn-container {
     color: white;
+    display: flex;
+    height: 102px;
+    align-items: center;
+  }
+  .btn {
+    width: 50%;
+    cursor: pointer;
+    text-align: center;
+    font-size: 24px;
+  }
+  .clear-btn {
+    flex: 1;
+  }
+  .main {
+    color: #000;
     height: 40vh;
     overflow: auto;
-    background: wheat;
+    background: white;
   }
   .active {
     background: rgba(40, 47, 58, 0.8);
@@ -77,20 +107,22 @@
     padding: 0;
     margin: 0;
     width: 750px;
-    height: 50%;
     border-top: 1px solid #ccc;
     position: fixed;
     left: 0;
     bottom: 0;
     background: #000;
+    z-index: 999;
   }
 
   .app-mask-layer {
+    /* display: none; */
+    z-index: 998;
     position: fixed;
     left: 0;
     top: 0;
     width: 100vw;
-    height: 50vh;
+    height: 100%;
     opacity: 0.5;
     background: #000;
   }

@@ -8,7 +8,9 @@ class Log extends ServerPlugin {
     model.watchLog();
   }
   init() {
-    super.render(() => {});
+    super.render((el: Element) => {
+      console.log("1111", el);
+    });
   }
 }
 export default Log;

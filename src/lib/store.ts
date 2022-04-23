@@ -21,4 +21,15 @@ export class LogStore {
   public static getStore(moduleId: string) {
     return this.storeDataMap[moduleId];
   }
+  // 清理log
+  public static clearStore(moduleId: string) {
+    console.log("chufa");
+
+    if (this.storeDataMap[moduleId]) {
+      this.storeDataMap[moduleId].update((store) => {
+        store.logList = [];
+        return store;
+      });
+    }
+  }
 }
