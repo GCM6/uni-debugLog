@@ -93,6 +93,7 @@
     transform: translate(-50%, -50%);
     color: white;
     text-align: center;
+    font-size: 28px;
   }
   .log-root {
     display: inline-flex;

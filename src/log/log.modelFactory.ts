@@ -43,6 +43,16 @@ export default class LogModelFactory {
           });
         };
       });
+    } else {
+      // 没有window对象的情况下
+      // uni 的getApp实例
+      const globalData = getApp().globalData;
+      if (globalData) {
+        // TODO
+        const appLogData = globalData.debuggerLogData;
+      } else {
+        throw new Error("globalData 为undefined,请重新注册实例~");
+      }
     }
   }
   // 恢复控制台打印
