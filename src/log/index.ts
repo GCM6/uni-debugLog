@@ -6,8 +6,12 @@ class Log extends ServerPlugin {
   constructor() {
     super("log", logComponent);
     model.watchLog();
+    this.id = "los";
+    console.log(12333, this.id);
   }
   init() {
+    console.log("super----》", this);
+
     super.render((el: Element) => {
       console.log("1111", el);
     });

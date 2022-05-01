@@ -45,14 +45,7 @@ export default class LogModelFactory {
       });
     } else {
       // 没有window对象的情况下
-      // uni 的getApp实例
-      const globalData = getApp().globalData;
-      if (globalData) {
-        // TODO
-        const appLogData = globalData.debuggerLogData;
-      } else {
-        throw new Error("globalData 为undefined,请重新注册实例~");
-      }
+      this.notWindowObj();
     }
   }
   // 恢复控制台打印
@@ -60,5 +53,22 @@ export default class LogModelFactory {
     if (typeof this.origLog[method] === "function") {
       this.origLog[method].apply(window.console, args);
     }
+  }
+  notWindowObj() {
+    const consoleMap = {
+      log: console.log,
+      info: console.info,
+      warn: console.warn,
+      error: console.error,
+    };
+    this.logMthods.forEach((method) => {
+      console[method] = (args) => {
+        this.addLog({
+          type: method,
+          logs: args,
+        });
+        consoleMap[method](args);
+      };
+    });
   }
 }

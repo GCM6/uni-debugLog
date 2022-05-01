@@ -1,7 +1,9 @@
 import App from "./App.svelte";
 import Log from "./log/index";
 const log = new Log();
-// log.init();
+log.init();
+console.log("12000003----", log.id);
+
 // dev 开发调式
 new App({ target: document.body });
 
