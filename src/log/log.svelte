@@ -12,11 +12,13 @@
   }
 </script>
 
-{#each $logData.logList as item}
-  <div class="log-item">
-    <JSONTree value={item.logs} />
-  </div>
-{/each}
+<div class="log-container">
+  {#each $logData.logList as item}
+    <div class="log-item">
+      <JSONTree value={item.logs} />
+    </div>
+  {/each}
+</div>
 
 <style>
   .log-item {

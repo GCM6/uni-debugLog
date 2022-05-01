@@ -14,14 +14,18 @@ export default class ServerPlugin {
     this.id = moduleId;
     this.Component = component;
   }
+  //通过插槽形式插入每个插件显示
   public render(cb: Function) {
-    const div = document.createElement("div");
+    const container = document.createElement("div");
+    const body = document.getElementsByTagName("body");
     new this.Component({
-      target: div,
+      target: container,
     });
-    console.log("div", div);
 
-    cb(div);
+    body[0].append(container);
+    console.log(container);
+
+    cb(container);
   }
   get moduleId() {
     return this.id;
