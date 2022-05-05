@@ -17,14 +17,9 @@ export default class ServerPlugin {
   //通过插槽形式插入每个插件显示
   public render(cb: Function) {
     const container = document.createElement("div");
-    const body = document.getElementsByTagName("body");
     new this.Component({
       target: container,
     });
-
-    body[0].append(container);
-    console.log(container);
-
     cb(container);
   }
   get moduleId() {

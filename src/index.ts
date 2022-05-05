@@ -1,18 +1,26 @@
 import App from "./App.svelte";
-import Log from "./log/index";
-const log = new Log();
-log.init();
-console.log("12000003----", log.id);
-
+import LogData from "./log/index";
 // dev 开发调式
-new App({ target: document.body });
+const app = new App({ target: document.body });
+console.log("app======>", app);
+// 事件监听
+app.$on("changePanel", (val) => {
+  console.log("changePanel--->", val.detail.moduleId);
+});
 
+new LogData();
+// ================================
 export default class AppLog {
+  public pluginId: string = "";
   constructor(target?: HTMLElement) {
     this._Init(target);
   }
   // 整个组件初始化
   private _Init(target?: HTMLElement) {
-    new App({ target: target || document.documentElement });
+    const app = new App({ target: target || document.documentElement });
+    app.$on("changePanel", (val) => {
+      this.pluginId = val.detail.moduleId;
+    });
+    new LogData();
   }
 }

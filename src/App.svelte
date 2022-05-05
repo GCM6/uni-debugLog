@@ -1,15 +1,21 @@
 <script lang="ts">
-  // const idMap: Record<string, string> = {
-  //   li1: "log",
-  //   li2: "network",
-  //   li3: "storage",
-  // };
+  const idMap: Record<string, string> = {
+    li1: "log",
+    li2: "network",
+    li3: "storage",
+  };
+  import { createEventDispatcher } from "svelte";
   import Log from "./log/log.svelte";
   import Network from "./network/network.svelte";
+  const dispatch = createEventDispatcher();
   let targetLi: string = "li1";
   let clearStatus: boolean = false;
   const onChangeTab = (e: any) => {
+    if (idMap[e.target.id] === idMap[targetLi]) {
+      return;
+    }
     targetLi = e.target.id;
+    dispatch("changePanel", { moduleId: idMap[targetLi] });
   };
   let switchOpen: boolean = true;
   const clearStore = () => {
