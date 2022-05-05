@@ -27,6 +27,6 @@
     padding: 20px 0px;
   }
   /* :global ul {
-    margin: 0 !important;
-  } */
+      margin: 0 !important;
+    } */
 </style>

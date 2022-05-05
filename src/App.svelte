@@ -150,7 +150,7 @@
     text-align: center;
     justify-content: center;
     cursor: pointer;
-    border-right: 0.5px solid #ccc;
+    border-right: 0.5px solid rgb(73, 76, 80);
   }
   .item:last-child {
     border: none;
@@ -164,7 +164,7 @@
   .tab-continer {
     display: flex;
     padding: 0;
-    border-bottom: 0.5px solid #ccc;
+    border-bottom: 0.5px solid rgb(73, 76, 80);
     /* background: rgba(48, 48, 58, 0.5); */
     font-size: 28px;
     color: white;
@@ -178,7 +178,7 @@
     padding: 0;
     margin: 0;
     width: 750px;
-    border-top: 1px solid #ccc;
+    border-top: 0.5px solid rgb(73, 76, 80);
     position: fixed;
     left: 0;
     bottom: 0;
