@@ -5,7 +5,7 @@ import { isWindow } from "../utils";
 import { LogStore as Store, Losgs } from "../lib/store";
 // 针对这几种类型
 type logType = "log" | "info" | "warn" | "error";
-export default class LogModelFactory {
+class LogModelFactory {
   // 是否window
   public windowLike: boolean;
   // 只读类型
@@ -72,3 +72,4 @@ export default class LogModelFactory {
     });
   }
 }
+export default LogModelFactory;

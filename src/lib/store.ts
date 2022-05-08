@@ -23,8 +23,6 @@ export class LogStore {
   }
   // 清理log
   public static clearStore(moduleId: string) {
-    console.log("chufa");
-
     if (this.storeDataMap[moduleId]) {
       this.storeDataMap[moduleId].update((store) => {
         store.logList = [];

@@ -27,7 +27,9 @@
     </div>
     <div class="network-item-conainer">
       {#each networkList as network}
-        <div class="network-item item-col">{network.name}</div>
+        <div class="network-item item-col">
+          {network.name}
+        </div>
         <div class="network-item ">{network.status}</div>
         <div class="network-item ">{network.type}</div>
         <div class="network-item ">{network.size}</div>
