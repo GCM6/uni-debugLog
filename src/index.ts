@@ -1,5 +1,6 @@
 import App from "./App.svelte";
 import LogData from "./log/index";
+import Network from "./network/index";
 // dev 开发调式
 const app = new App({ target: document.body });
 console.log("app======>", app);
@@ -8,7 +9,8 @@ app.$on("changePanel", (val) => {
   console.log("changePanel--->", val.detail.moduleId);
 });
 
-new LogData();
+// new LogData();
+new Network();
 // ================================
 export default class AppLog {
   public pluginId: string = "";

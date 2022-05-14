@@ -1,9 +1,11 @@
-import { NetworkItemDetail } from "./requestItemDetail";
+import { NetworkItemDetail, queryRequestData } from "./requestItemDetail";
 // 泛型约束
 class XmlReqHandler<T extends XMLHttpRequest> {
   private reqItemDetail: NetworkItemDetail;
+  public callback: Function;
   constructor(xhr: XMLHttpRequest, callback: Function) {
     this.reqItemDetail = new NetworkItemDetail();
+    this.callback = callback;
   }
   public get(target: T, key: string) {
     switch (key) {
@@ -33,7 +35,10 @@ class XmlReqHandler<T extends XMLHttpRequest> {
       // 设置请求类型默认值
       const requestMethod = args[0] ? args[0].toUpperCase() : "GET";
       this.reqItemDetail.method = requestMethod;
-      // TODO
+      this.reqItemDetail.url = args[1];
+      this.reqItemDetail.getData = queryRequestData(this.reqItemDetail.url, {});
+      this.callback(this.reqItemDetail);
+      return Reflect.get(target, "open");
     };
   }
   private getSendData(target: T) {
