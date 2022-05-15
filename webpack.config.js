@@ -72,6 +72,9 @@ module.exports = (_, arg) => {
       mainFields: ["svelte", "browser", "module", "main"],
     },
     devServer: {
+      static: {
+        directory: path.join(__dirname, "/"),
+      },
       open: true,
       hot: true,
       port: 8081,

@@ -19,12 +19,14 @@ export class NetworkItemDetail {
   header: { [key: string]: string } = {};
   method: requestMethod = "";
   requestType: "xhr" | "fetch" | "ping" | "custom" = "xhr";
+  responseType: XMLHttpRequest["responseType"] = "";
   requestHeader: HeadersInit = {};
   response: any;
   responseSize: number = 0;
   startTime: number = 0;
   endTime: number = 0;
-  postData: { [key: string]: string } = {};
+  costTime: number = 0;
+  postData: { [key: string]: string } | string | null = null;
   getData: { [key: string]: string } = {};
 }
 export const queryRequestData = (
@@ -53,4 +55,34 @@ export const queryRequestData = (
     }
   }
   return getData;
+};
+
+export const getFormattedBody = (body?: BodyInit) => {
+  if (!body) return null;
+  let formattedBody: string | { [key: string]: string } = {};
+  if (typeof body === "string") {
+    try {
+      formattedBody = JSON.parse(body);
+    } catch (error) {
+      const bodyArr = body.split("&");
+      if (bodyArr.length === 1) {
+        formattedBody = body;
+      } else {
+        // 保证类型是{}
+        formattedBody = {};
+        for (const iterator of bodyArr) {
+          const splitVal = iterator.split("=");
+          formattedBody[splitVal[0] as keyof typeof formattedBody] =
+            splitVal[1] === undefined ? "undefined" : splitVal[1];
+        }
+      }
+    }
+  } else {
+  }
+  return formattedBody;
+};
+export const responseParse = (responseType: string, response: any) => {
+  if (responseType === "json") {
+  } else {
+  }
 };

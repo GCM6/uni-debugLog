@@ -7,5 +7,35 @@
     <title>app-log</title>
 </head>
 <body>
+    <div onclick="getAjax()">点击我</div>
+    <script>
+         function getAjax() {
+    console.log("chifa---->");
+    let postData = {
+    foo: 'bar',
+    book: { id: 123, type: 'comic', uid: [4,5,6,7,8] },
+    id: `${Math.random()}${Math.random()}${Math.random()}${Math.random()}${Math.random()}${Math.random()}`,
+    type: 'xhr',
+    '<xss0>': '<xss1> XSS Attack!'
+  }
+    const url =
+      window.location.origin +
+      "/dev/data.json?method=xhrPost&id=" +
+      Math.random() +
+      "&<xss0>";
+        console.log("window.location.origin", window.location.origin);
+    const xhr = new XMLHttpRequest();
+    console.log("xhr", xhr);
+    xhr.open("POST", url);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.send(JSON.stringify(postData));
+    xhr.onload = () => {
+      console.log("get XHR Response:", xhr.response);
+    };
+    xhr.onerror = (e) => {
+      console.log("get XHR Error", e);
+    };
+  }
+    </script>
 </body>
 </html>
