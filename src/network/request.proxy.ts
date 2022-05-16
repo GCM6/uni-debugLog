@@ -2,6 +2,7 @@ import {
   getFormattedBody,
   NetworkItemDetail,
   queryRequestData,
+  responseParse,
 } from "./requestItemDetail";
 // 泛型约束
 class XmlReqHandler<T extends XMLHttpRequest> {
@@ -13,7 +14,7 @@ class XmlReqHandler<T extends XMLHttpRequest> {
     this.callback = callback;
     this.xmlReq = xhr;
     this.xmlReq.onreadystatechange = () => {
-      this.onreadystatechange();
+      this.onReadyStateChange();
     };
   }
   public get(target: T, key: string) {
@@ -38,6 +39,10 @@ class XmlReqHandler<T extends XMLHttpRequest> {
     }
   }
   public set(target: T, key: string, val: any) {
+    switch (key) {
+      case "onreadystatechange":
+        return this.setOnReadyStateChange(target, key, val);
+    }
     return Reflect.set(target, key, val);
   }
   private getOpenData(target: T) {
@@ -73,15 +78,85 @@ class XmlReqHandler<T extends XMLHttpRequest> {
       return Reflect.get(target, "setRequestHeader").apply(target, args);
     };
   }
-  protected onreadystatechange() {
+  protected onReadyStateChange() {
     this.reqItemDetail.readyState = this.xmlReq.readyState;
     this.reqItemDetail.responseType = this.xmlReq.responseType;
     this.reqItemDetail.endTime = Date.now();
     this.reqItemDetail.costTime = this.reqItemDetail.endTime -
       this.reqItemDetail.startTime;
-    // TODO
-    this.reqItemDetail.response = this.reqItemDetail.responseType;
+    // 根据状态设置值
+    this.updateReqItemReadyState();
+    this.reqItemDetail.response = responseParse(
+      this.reqItemDetail.responseType,
+      this.xmlReq.response,
+    );
     this.callback(this.reqItemDetail);
+  }
+  protected setOnReadyStateChange(target: T, key: string, value: any) {
+    return Reflect.set(target, key, (...args: any[]) => {
+      this.onReadyStateChange();
+      value.apply(target, args);
+    });
+  }
+  protected updateReqItemReadyState() {
+    switch (this.xmlReq.readyState) {
+      case 0:
+        // 初始化状态
+        this.reqItemDetail.status = 0;
+        this.reqItemDetail.statusText = "Pending";
+        // 初始化开始时间
+        if (!this.reqItemDetail.startTime) {
+          this.reqItemDetail.startTime = Date.now();
+        }
+        break;
+      case 1:
+        // 初始化状态
+        this.reqItemDetail.status = 0;
+        this.reqItemDetail.statusText = "Pending";
+        // 初始化开始时间
+        if (!this.reqItemDetail.startTime) {
+          this.reqItemDetail.startTime = Date.now();
+        }
+        break;
+      case 2:
+        this.reqItemDetail.status = this.xmlReq.status;
+        this.reqItemDetail.statusText = "Loading";
+        const reqHeader: string = this.xmlReq.getAllResponseHeaders() || "";
+        const headerList: string[] = reqHeader.split("\n");
+        // 组合header
+        for (let index = 0; index < headerList.length; index++) {
+          const line = headerList[index];
+          if (!line) continue;
+          const arr = line.split(": ");
+          const key = arr[0];
+          const value = arr.slice(1).join(": ");
+          this.reqItemDetail.header[key] = value;
+        }
+        break;
+      case 3:
+        this.reqItemDetail.status = this.xmlReq.status;
+        this.reqItemDetail.statusText = "Loading";
+        if (!!this.xmlReq.response && this.xmlReq.response?.length) {
+          this.reqItemDetail.responseSize = this.xmlReq.response?.length;
+        }
+        break;
+      case 4:
+        this.reqItemDetail.status = this.xmlReq.status ||
+          this.reqItemDetail.status || 0;
+        this.reqItemDetail.statusText = String(this.reqItemDetail.status);
+        this.reqItemDetail.endTime = Date.now();
+        this.reqItemDetail.costTime = this.reqItemDetail.endTime -
+          (this.reqItemDetail.startTime || Date.now());
+        this.reqItemDetail.response = this.xmlReq.response;
+        if (!!this.xmlReq.response && this.xmlReq.response?.length) {
+          this.reqItemDetail.responseSize = this.xmlReq.response?.length;
+        }
+        break;
+      default:
+        this.reqItemDetail.status = this.xmlReq.status;
+        this.reqItemDetail.statusText = "Unknown";
+        break;
+    }
   }
 }
 export class requestProxy {

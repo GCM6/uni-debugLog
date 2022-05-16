@@ -2,6 +2,13 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const sveltePreprocess = require("svelte-preprocess");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
+/**
+ *
+ * @param {*} _
+ * @param {*} arg
+ * @returns {import("webpack").Configuration}
+ */
 module.exports = (_, arg) => {
   return {
     mode: arg.mode,
@@ -74,6 +81,31 @@ module.exports = (_, arg) => {
     devServer: {
       static: {
         directory: path.join(__dirname, "/"),
+      },
+      /**
+       * 模拟调用本地json文件
+       * @param {*} middlewares
+       * @param {import("webpack-dev-server")} devServer
+       */
+      setupMiddlewares(middlewares, devServer) {
+        devServer.app.post("*", (req, res) => {
+          try {
+            const reqPath = req.path;
+            res.status(req.query.s || 200);
+            const file = require("fs").readFileSync(
+              path.join(__dirname, reqPath)
+            );
+            if (req.query.chunked) {
+              res.write(file);
+            } else {
+              res.send(file);
+            }
+          } catch (error) {
+            res.end();
+          }
+        });
+
+        return middlewares;
       },
       open: true,
       hot: true,

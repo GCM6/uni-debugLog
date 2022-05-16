@@ -1,4 +1,6 @@
 {
-    "key": "foo\nbar\tyoo",
-    "-->\tyo\n'\"/><iframe>": "-->\n'\"/></pre><iframe>"
+  "code": 200,
+  "data": {
+    "title": "本地请求测试"
+  }
   }

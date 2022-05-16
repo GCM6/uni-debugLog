@@ -13,6 +13,7 @@ type requestMethod =
 export class NetworkItemDetail {
   name: string = "";
   status: number | string = 0;
+  statusText: string = "";
   url: string = "";
   cancelState?: 0 | 1 | 2 | 3 = 0;
   readyState?: XMLHttpRequest["readyState"] = 0;
@@ -82,7 +83,13 @@ export const getFormattedBody = (body?: BodyInit) => {
   return formattedBody;
 };
 export const responseParse = (responseType: string, response: any) => {
-  if (responseType === "json") {
+  let res = {};
+  console.log("responseType", responseType, response);
+
+  if (response && typeof response === "string" || responseType === "json") {
+    res = JSON.parse(response);
   } else {
+    res = response;
   }
+  return res;
 };
