@@ -11,6 +11,7 @@ type requestMethod =
   | "PATCH";
 
 export class NetworkItemDetail {
+  id: string = "";
   name: string = "";
   status: number | string = 0;
   statusText: string = "";
@@ -29,6 +30,10 @@ export class NetworkItemDetail {
   costTime: number = 0;
   postData: { [key: string]: string } | string | null = null;
   getData: { [key: string]: string } = {};
+  constructor() {
+    // 初始化ID默认随机值
+    this.id = Math.random().toString(36).slice(-8);
+  }
 }
 export const queryRequestData = (
   url: string,
