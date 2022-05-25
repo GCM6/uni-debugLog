@@ -11,6 +11,7 @@ type requestMethod =
   | "PATCH";
 
 export class NetworkItemDetail {
+  // 比如key是id就是string，key是cacelState就是不兼容就会是never明白了
   id: string = "";
   name: string = "";
   status: number | string = 0;
