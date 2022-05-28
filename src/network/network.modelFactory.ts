@@ -1,16 +1,15 @@
 import { isWindow } from "../utils";
-import { LogStore as Store, Losgs } from "../lib/store";
 import { requestProxy } from "./request.proxy";
 import { NetworkItemDetail } from "./requestItemDetail";
 import { get, writable } from "svelte/store";
 // Store初始化
 const requestItemList = writable<Record<string, NetworkItemDetail>>({});
-class networkModelFactory {
+export class NetworkModelFactory {
   constructor() {
     this.mockXHRData();
   }
   // 设置为空
-  public clearReqLog() {
+  public static clearReqLog() {
     requestItemList.set({});
   }
   private mockXHRData() {
@@ -19,7 +18,6 @@ class networkModelFactory {
     } else {
       window.XMLHttpRequest = requestProxy.create(
         (reqItem: NetworkItemDetail) => {
-          console.log("劫持的request", reqItem);
           this.updateNetworkData(reqItem.id, reqItem);
         },
       );
@@ -29,8 +27,6 @@ class networkModelFactory {
     const reqMap = get(requestItemList);
     let reqItem = reqMap[id];
     const reqId = !!data[id as keyof typeof data]; //转化为boolean
-    type a = keyof typeof data;
-
     // 如果是同一个请求
     if (reqId) {
       // 更新这个的请求的状态
@@ -51,5 +47,9 @@ class networkModelFactory {
       return store;
     });
   }
+  public static getStore() {
+    const reqData = get(requestItemList);
+    console.log("reqData", reqData);
+    return get(requestItemList);
+  }
 }
-export default networkModelFactory;

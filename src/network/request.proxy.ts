@@ -47,7 +47,6 @@ class XmlReqHandler<T extends XMLHttpRequest> {
   }
   private getOpenData(target: T) {
     return (...args: any) => {
-      console.log("aaa", args);
       // 设置请求类型默认值
       const requestMethod = args[0] ? args[0].toUpperCase() : "GET";
       this.reqItemDetail.method = requestMethod;
@@ -73,7 +72,6 @@ class XmlReqHandler<T extends XMLHttpRequest> {
       }
       // key 的类型来自约定的类型 keyof
       this.reqItemDetail.requestHeader[args[0] as keyof HeadersInit] = args[1];
-      console.log("this.reqItemDetail", this.reqItemDetail);
       this.callback(this.reqItemDetail);
       return Reflect.get(target, "setRequestHeader").apply(target, args);
     };

@@ -90,8 +90,6 @@ export const getFormattedBody = (body?: BodyInit) => {
 };
 export const responseParse = (responseType: string, response: any) => {
   let res = {};
-  console.log("responseType", responseType, response);
-
   if (response && typeof response === "string" || responseType === "json") {
     res = JSON.parse(response);
   } else {
