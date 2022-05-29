@@ -1,21 +1,9 @@
 <script lang="ts">
-  const titleList: string[] = ["Name", "Status", "Type", "Size", "Time"];
-  interface NetworkList {
-    name: string;
-    status: number;
-    type: string;
-    size: string;
-    time: string;
-  }
-  const networkList: NetworkList[] = [
-    {
-      name: "http://www.baidu.com/search?asdasdadadsdasdasas",
-      status: 200,
-      type: "feath",
-      size: "30b",
-      time: "200ms",
-    },
-  ];
+  import { requestItemList } from "./network.modelFactory";
+  const titleList: string[] = ["Name", "Status", "Method", "Time"];
+  const onTapPreview = (reqId: string) => {
+    $requestItemList[reqId].actived = !$requestItemList[reqId].actived;
+  };
 </script>
 
 <div>
@@ -25,21 +13,70 @@
         <div class="network-item">{tab}</div>
       {/each}
     </div>
-    <div class="network-item-conainer">
-      {#each networkList as network}
+    {#each Object.entries($requestItemList) as [reqId, req]}
+      <div class="network-item-conainer" on:click={() => onTapPreview(reqId)}>
         <div class="network-item item-col">
-          {network.name}
+          {req.url}
         </div>
-        <div class="network-item ">{network.status}</div>
-        <div class="network-item ">{network.type}</div>
-        <div class="network-item ">{network.size}</div>
-        <div class="network-item ">{network.time}</div>
-      {/each}
-    </div>
+        <div class="network-item ">{req.statusText}</div>
+        <div class="network-item ">{req.method}</div>
+        <div class="network-item ">{req.costTime}</div>
+      </div>
+      <div class="top-preview-container" class:log-actived={req.actived}>
+        <div class="preview-title">request Header</div>
+        {#each Object.entries(req.header) as [key, val]}
+          <div class="list-main">
+            <div class="item-key">{key}</div>
+            <div class="item-val">{val}</div>
+          </div>
+        {/each}
+        <div class="preview-title">Query String Parameters</div>
+        {#each Object.entries(req.getData) as [key, val]}
+          <div class="list-main">
+            <div class="item-key">{key}</div>
+            <div class="item-val">{val}</div>
+          </div>
+        {/each}
+      </div>
+    {/each}
   </div>
 </div>
 
 <style>
+  .preview-title {
+    font-size: 28px;
+    font-weight: bold;
+    padding: 10px 0 10px 10px;
+    border-left: 0.5px solid rgba(0, 0, 0, 0.1);
+    border-top: 0.5px solid rgba(0, 0, 0, 0.1);
+  }
+  .item-key {
+    width: 40%;
+    padding: 10px;
+  }
+  .item-val {
+    width: 60%;
+    padding: 10px;
+    border-left: 0.5px solid rgba(0, 0, 0, 0.1);
+  }
+  .list-main {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    font-size: 22px;
+    border-top: 0.5px solid rgba(0, 0, 0, 0.1);
+    border-left: 0.5px solid rgba(0, 0, 0, 0.1);
+  }
+  .list-main:last-child {
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
+  }
+  .log-actived {
+    display: block !important;
+  }
+  .top-preview-container {
+    display: none;
+    padding-left: 20px;
+  }
   .item-col {
     flex: 4;
   }

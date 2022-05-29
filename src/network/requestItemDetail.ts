@@ -31,6 +31,7 @@ export class NetworkItemDetail {
   costTime: number = 0;
   postData: { [key: string]: string } | string | null = null;
   getData: { [key: string]: string } = {};
+  actived: boolean = false;
   constructor() {
     // 初始化ID默认随机值
     this.id = Math.random().toString(36).slice(-8);

@@ -3,7 +3,7 @@ import { requestProxy } from "./request.proxy";
 import { NetworkItemDetail } from "./requestItemDetail";
 import { get, writable } from "svelte/store";
 // Store初始化
-const requestItemList = writable<Record<string, NetworkItemDetail>>({});
+export const requestItemList = writable<Record<string, NetworkItemDetail>>({});
 export class NetworkModelFactory {
   constructor() {
     this.mockXHRData();
@@ -25,6 +25,7 @@ export class NetworkModelFactory {
   }
   private updateNetworkData(id: string, data: NetworkItemDetail) {
     const reqMap = get(requestItemList);
+    console.log("reqMap----->", reqMap);
     let reqItem = reqMap[id];
     const reqId = !!data[id as keyof typeof data]; //转化为boolean
     // 如果是同一个请求
@@ -46,10 +47,5 @@ export class NetworkModelFactory {
       store[id] = data;
       return store;
     });
-  }
-  public static getStore() {
-    const reqData = get(requestItemList);
-    console.log("reqData", reqData);
-    return get(requestItemList);
   }
 }

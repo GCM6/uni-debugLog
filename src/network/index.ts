@@ -1,12 +1,12 @@
 import ServerPlugin from "../lib/serverPlugin";
 import networkComponent from "./network.svelte";
-// import networkModelFactory from "./network.modelFactory";
+import { NetworkModelFactory } from "./network.modelFactory";
 
 class AppNetWork extends ServerPlugin {
   constructor() {
     super("network", networkComponent);
     this.initNetWork();
-    // new networkModelFactory();
+    new NetworkModelFactory();
   }
   private initNetWork() {
     super.render((el: Element) => {
