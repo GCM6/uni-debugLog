@@ -19,7 +19,7 @@ export class NetworkItemDetail {
   url: string = "";
   cancelState?: 0 | 1 | 2 | 3 = 0;
   readyState?: XMLHttpRequest["readyState"] = 0;
-  header: { [key: string]: string } = {};
+  respHeader: { [key: string]: string } = {};
   method: requestMethod = "";
   requestType: "xhr" | "fetch" | "ping" | "custom" = "xhr";
   responseType: XMLHttpRequest["responseType"] = "";

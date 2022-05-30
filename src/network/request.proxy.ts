@@ -119,8 +119,8 @@ class XmlReqHandler<T extends XMLHttpRequest> {
       case 2:
         this.reqItemDetail.status = this.xmlReq.status;
         this.reqItemDetail.statusText = "Loading";
-        const reqHeader: string = this.xmlReq.getAllResponseHeaders() || "";
-        const headerList: string[] = reqHeader.split("\n");
+        const respHeader: string = this.xmlReq.getAllResponseHeaders() || "";
+        const headerList: string[] = respHeader.split("\n");
         // 组合header
         for (let index = 0; index < headerList.length; index++) {
           const line = headerList[index];
@@ -128,7 +128,7 @@ class XmlReqHandler<T extends XMLHttpRequest> {
           const arr = line.split(": ");
           const key = arr[0];
           const value = arr.slice(1).join(": ");
-          this.reqItemDetail.header[key] = value;
+          this.reqItemDetail.respHeader[key] = value;
         }
         break;
       case 3:
